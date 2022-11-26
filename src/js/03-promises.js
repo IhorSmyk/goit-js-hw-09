@@ -9,8 +9,6 @@ formRef.addEventListener('submit', e => {
   let step = Number(e.target.elements.step.value);
   let amount = Number(e.target.elements.amount.value);
 
-  e.target.reset();
-
   for (let position = 1; position <= amount; position += 1) {
     createPromise(position, delay)
       .then(({ position, delay }) => {
