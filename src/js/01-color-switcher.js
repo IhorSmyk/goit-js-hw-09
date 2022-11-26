@@ -1,11 +1,13 @@
-startRef = document.querySelector('[data-start]');
-stopRef = document.querySelector('[data-stop]');
+const refs = {
+  start: document.querySelector('[data-start]'),
+  stop: document.querySelector('[data-stop]'),
+};
 
 let timerId = null;
 
-startRef.addEventListener('click', changeColor);
-stopRef.addEventListener('click', stopChange);
-stopRef.setAttribute('disabled', true);
+refs.start.addEventListener('click', changeColor);
+refs.stop.addEventListener('click', stopChange);
+refs.stop.setAttribute('disabled', true);
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -16,12 +18,12 @@ function changeColor() {
     document.body.style.background = getRandomHexColor();
   }, 1000);
 
-  stopRef.removeAttribute('disabled');
-  startRef.setAttribute('disabled', true);
+  refs.stop.removeAttribute('disabled');
+  refs.start.setAttribute('disabled', true);
 }
 
 function stopChange() {
   clearInterval(timerId);
-  startRef.removeAttribute('disabled');
-  stopRef.setAttribute('disabled', true);
+  refs.start.removeAttribute('disabled');
+  refs.stop.setAttribute('disabled', true);
 }

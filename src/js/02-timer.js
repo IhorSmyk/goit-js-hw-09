@@ -2,15 +2,15 @@ import flatpickr from 'flatpickr';
 import Notiflix from 'notiflix';
 import 'flatpickr/dist/flatpickr.min.css';
 
-const inputDate = document.querySelector('#datetime-picker');
+const refs = {
+  days: document.querySelector('[data-days]'),
+  hours: document.querySelector('[data-hours]'),
+  minutes: document.querySelector('[data-minutes]'),
+  seconds: document.querySelector('[data-seconds]'),
+  btn: document.querySelector('button'),
+};
 
-const daysLeft = document.querySelector('[data-days]');
-const hoursLeft = document.querySelector('[data-hours]');
-const minutesLeft = document.querySelector('[data-minutes]');
-const secondsLeft = document.querySelector('[data-seconds]');
-
-const buttonDate = document.querySelector('button');
-buttonDate.setAttribute('disabled', 'disabled');
+refs.btn.setAttribute('disabled', 'disabled');
 
 const options = {
   enableTime: true,
@@ -21,7 +21,7 @@ const options = {
     if (selectedDates[0] <= Date.now()) {
       Notiflix.Notify.failure('Please choose a date in the future');
     } else {
-      buttonDate.removeAttribute('disabled');
+      refs.btn.removeAttribute('disabled');
     }
   },
 };
@@ -44,7 +44,7 @@ function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
 
-const fp = flatpickr(inputDate, options);
+const fp = flatpickr(document.querySelector('#datetime-picker'), options);
 
 const timer = {
   start() {
@@ -53,10 +53,10 @@ const timer = {
       const deltaTime = fp.selectedDates[0] - currentTime;
       const { days, hours, minutes, seconds } = convertMs(deltaTime);
 
-      daysLeft.textContent = addLeadingZero(days);
-      hoursLeft.textContent = addLeadingZero(hours);
-      minutesLeft.textContent = addLeadingZero(minutes);
-      secondsLeft.textContent = addLeadingZero(seconds);
+      refs.days.textContent = addLeadingZero(days);
+      refs.hours.textContent = addLeadingZero(hours);
+      refs.minutes.textContent = addLeadingZero(minutes);
+      refs.seconds.textContent = addLeadingZero(seconds);
 
       if (deltaTime < 1000) {
         clearInterval(this.intervalId);
@@ -65,6 +65,6 @@ const timer = {
   },
 };
 
-buttonDate.addEventListener('click', () => {
+refs.btn.addEventListener('click', () => {
   timer.start();
 });
